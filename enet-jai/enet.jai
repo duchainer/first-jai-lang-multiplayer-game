@@ -270,6 +270,9 @@ host_create :: (address: *Address, peer_count: int, channel_limit: int, incoming
     if host.socket != INVALID_SOCKET set_socket_options(host.socket, .IPV6_V6ONLY, 0);
 
     if host.socket == INVALID_SOCKET || (socket_bind(host.socket, address) < 0 && address != null) {
+        #if OS == .LINUX {
+                    WSAGetLastError := errno;
+        }
         log_error("Failed to create and bind socket: %\n", WSAGetLastError());
 
         socket_destroy(host.socket);
@@ -1448,8 +1451,8 @@ socket_receive :: (socket: Socket, address: *Address, buffers: []Buffer, buffer_
         msg_header.msg_name = *sin;
         msg_header.msg_namelen = size_of(sockaddr_in6);
 
-        msg_header.msg_iov = buffers.data;
-        msg_header.msg_iovlen = buffer_count;
+        msg_header.msg_iov = cast(*iovec)buffers.data;
+        msg_header.msg_iovlen = buffers.count - 1;
 
         receive_length = recvmsg(socket, *msg_header, MSG_NOSIGNAL);
 

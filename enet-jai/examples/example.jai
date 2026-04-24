@@ -1,6 +1,7 @@
 // Run "example.exe -server" to run as server, then run a second instance to connect as a client.
 enet :: #import,file "../enet.jai";
 #import "Basic";
+#import "POSIX";
 
 SERVER_ADDRESS :: "127.0.0.1";
 SERVER_PORT :: 1234;
