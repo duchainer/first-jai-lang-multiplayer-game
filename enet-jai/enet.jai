@@ -1238,7 +1238,7 @@ socket_create :: () -> Socket {
 socket_destroy :: (socket: Socket) {
     #if OS == .WINDOWS {
         closesocket(socket);
-    } else #if OS == .UNIX {
+    } else #if OS == .LINUX {
         close(socket);
     }
 }
@@ -1322,7 +1322,7 @@ socket_wait :: (socket: Socket, condition: *Socket_Wait, timeout: s64) -> Result
         if FD_ISSET(socket, *write_set) then condition.* |= .SEND;
         if FD_ISSET(socket, *read_set) then condition.* |= .RECEIVE;
 
-    } else #if OS == .UNIX {
+    } else #if OS == .LINUX {
         poll_socket: pollfd;
         poll_count:  int;
 
@@ -1378,7 +1378,7 @@ socket_send :: (socket: Socket, address: *Address, buffers: []Buffer, buffer_cou
             error_no := WSAGetLastError();
             return ifx error_no == WSAEWOULDBLOCK then cast(s32)0 else cast(s32)-1, error_no;
         }
-    } else #if OS == .UNIX {
+    } else #if OS == .LINUX {
         msg_header: msghdr;
 
         if address != null {
@@ -1443,7 +1443,7 @@ socket_receive :: (socket: Socket, address: *Address, buffers: []Buffer, buffer_
             address.sin6_scope_id  = xx sin.sin6_scope_id;
         }
 
-    } else #if OS == .UNIX {
+    } else #if OS == .LINUX {
         msg_header: msghdr;
         msg_header.msg_name = *sin;
         msg_header.msg_namelen = size_of(sockaddr_in6);
