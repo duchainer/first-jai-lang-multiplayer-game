@@ -870,7 +870,7 @@ Result_Status :: enum {
     FAILURE;
 }
 
-Socket :: #type SOCKET;
+// Socket :: #type SOCKET;
 
 Socket_Options :: enum {
     NONEBLOCK;
