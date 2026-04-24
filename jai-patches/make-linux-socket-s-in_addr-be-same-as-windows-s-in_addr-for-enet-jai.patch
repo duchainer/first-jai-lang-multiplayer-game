@@ -1,0 +1,28 @@
+diff --git a/modules/Socket/generated_linux.jai b/modules/Socket/generated_linux.jai
+index fedba75..77e9c1f 100644
+--- a/modules/Socket/generated_linux.jai
++++ b/modules/Socket/generated_linux.jai
+@@ -939,7 +939,22 @@ or -1 for errors (setting errno).  */
+ isfdtype :: (__fd: s32, __fdtype: s32) -> s32 #foreign libc;
+ 
+ /* Internet address.  */
+-in_addr_t :: u32;
++in_addr_t :: struct {
++    S_un: union {
++        S_un_b: struct {
++            s_b1: u8;
++            s_b2: u8;
++            s_b3: u8;
++            s_b4: u8;
++        };
++        S_un_w: struct {
++            s_w1: u16;
++            s_w2: u16;
++        };
++        S_addr: u32;
++    };
++}
++
+ in_addr :: struct {
+     s_addr: in_addr_t;
+ }
