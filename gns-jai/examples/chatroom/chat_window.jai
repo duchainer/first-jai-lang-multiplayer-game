@@ -148,7 +148,7 @@ System  :: #import "System";
 #import "GL";
 #import "String";
 #import "Basic";
-#import "Render";
+// #import "Render";
 #import "Math";
 
 init_demo_app :: (title: string) 
