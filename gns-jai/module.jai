@@ -2124,7 +2124,7 @@ g_utils_interface : *IUtils;
 
 GlobalInterfaceWrapper :: inline ($pp : **$T) -> *T
 {
-    return << pp;
+    return pp.*;
 }
 
 #if      OS == .WINDOWS lib :: #foreign_library,no_dll "win/GameNetworkingSockets";

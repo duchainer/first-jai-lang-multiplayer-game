@@ -384,7 +384,7 @@ UpdateServer :: (server : *ServerData)
 
                     for ServerHelpMsg
                     {
-                        SendStringToClient(<< client, it);
+                        SendStringToClient((.*) client, it);
                     }
                     continue;
                 }
@@ -399,7 +399,7 @@ UpdateServer :: (server : *ServerData)
                     {
                         invalidNickNameCommandArgsMessage := sprint("\"%\" is a truly vane name, thou must try again", args);
                         defer free(invalidNickNameCommandArgsMessage);
-                        SendStringToClient(<< client, invalidNickNameCommandArgsMessage);
+                        SendStringToClient((.*) client, invalidNickNameCommandArgsMessage);
                         continue;
                     }
 
@@ -414,7 +414,7 @@ UpdateServer :: (server : *ServerData)
                     {
                         renameMessage := sprint("Ye shall henceforth be known as %", args);
                         defer free(renameMessage);
-                        SendStringToClient(<< client, renameMessage);
+                        SendStringToClient((.*) client, renameMessage);
                     }
 
                     // Actually change their name
