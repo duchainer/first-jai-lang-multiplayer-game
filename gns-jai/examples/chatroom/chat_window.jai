@@ -18,7 +18,7 @@ InitializeChatWindow :: (chat : ChatWindowData)
     init_demo_app(chat.window_title);
 }
 
-UpdateChatWindow :: (chat : *ChatWindowData) -> is_quitting : bool #must
+UpdateChatWindow :: (chat : *ChatWindowData) -> is_quitting : bool
 {
     Input.update_window_events();
 
