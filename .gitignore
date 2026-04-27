@@ -1,0 +1,7 @@
+# Gitignore files with no extension, as those are executables
+*
+!/**/
+!*.*
+
+# Gitignore build files
+.build/
