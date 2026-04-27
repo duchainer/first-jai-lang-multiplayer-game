@@ -32,8 +32,14 @@ basics :: () {
 // see jai-beta-2-028/jai/how_to/900_inline_assembly.jai:59
 // print :: (format_string: string, args: .. Any) -> bytes_printed: s64;
 print_asm :: (format_string: string, arg0: Code) -> bytes_printed: s64 #expand{
-    to_print_arg0 := #insert arg0;
-    print(format_string, to_print_arg0);
+    print(format_string,
+        // WHY? Because we wanted to test things for the varargs version of print_asm
+        // We use this trick to get a scope that returns an expression result, but there might be a less hacky way ^^"""
+        ifx true {
+            to_print_arg0 := #insert arg0;
+            to_print_arg0;
+        }
+    );
 }
 
 print_asm :: (format_string: string, arg0: Code, arg1: Code) -> bytes_printed: s64 #expand{
@@ -61,6 +67,10 @@ print_asm :: (format_string: string, arg0: Code, arg1: Code, arg2: Code) -> byte
 
 main :: () {
     basics();
+    b := ifx true {
+        a := 2;
+        a + 2;
+    }
 }
 
 #import "Basic";
